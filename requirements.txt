@@ -3,6 +3,5 @@ tensorflow
 numpy
 scikit-learn
 keras
-imghdr
 matplotlib
 opencv-python
