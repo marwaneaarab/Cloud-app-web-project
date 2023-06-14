@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Classification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cg fill-rule='evenodd'%3E%3Cg id='hexagons' fill='%239C92AC' fill-opacity='0.25' fill-rule='nonzero'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.3zM15 0v7.5L27.99 15H28v-2.31h-.01L17 6.35V0h-2zm0 49v-8l12.99-7.5H28v2.31h-.01L17 42.15V49h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"), linear-gradient(to right top, #343a40, #2b2c31, #211f22, #151314, #000000);
+            font-family: 'Share Tech', sans-serif;
+            color: white;
+            background-color: #343a40;
+
+        }
+        .container {
+            max-width: 500px;
+            margin: 50px auto;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+        h1 {
+            text-align: center;
+            color: #333333;
+            margin-top: 0;
+            text-shadow: 2px 2px 2px #0000008c;
+
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            color: #333333;
+            margin-bottom: 5px;
+        }
+        .form-group input[type="file"] {
+            display: block;
+            margin-top: 5px;
+        }
+        .form-group input[type="submit"] {
+            margin-top: 10px;
+            background-color: #333333;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .form-group input[type="submit"]:hover {
+            background-color: #555555;
+        }
+        #result {
+            margin-top: 30px;
+            text-align: center;
+            font-weight: bold;
+            color: #555555;
+            font-size: 18px;
+        }
+        #image-container{
+            width: 100%;
+            height : 100%;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+
+        }
+
+        #selected-image{
+            max-width: 50%;
+            max-height: 40%;
+
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Image Classification</h1>
+        <form id="upload-form" action="/classify" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="image">Select an image:</label>
+                <input type="file" name="image" id="image" accept="image/*" required>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Classify">
+            </div>
+        </form>
+        <div id="image-container">
+            <img id="selected-image" >
+            
+
+        </div>
+        <div id="result">
+            {% if result %}
+                <p>{{ result }}</p>
+            {% endif %}
+        </div>
+
+    </div>
+    <script>
+        var imageInput = document.getElementById('image');
+        var selectedImage = document.getElementById('selected-image');
+
+        imageInput.addEventListener('change', function(event) {
+            var file = event.target.files[0];
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                selectedImage.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+    </script>
+</body>
+</html>
